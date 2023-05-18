@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
+const middleware = require("./middleware");
 
 const app = express();
 app.use(morgan("common"));
@@ -18,20 +19,9 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use((req, res, next) => {
-  const err = new Error(`Not found - ${req.originalUrl}`);
-  res.status(404);
-  next(err);
-});
+app.use(middleware.notFound);
 
-app.use((err, req, res, next) => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  res.status(statusCode);
-  res.json({
-    message: err.message,
-    stack: process.env.NODE_ENV === "production" ? "⭐" : err.stack,
-  });
-});
+app.use(middleware.errorHandler);
 
 app.listen(1337, () => {
   console.log("Server started");
