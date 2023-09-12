@@ -14,7 +14,7 @@ mongoose
   .then(() => console.log("Mongo connected"))
   .catch((err) => console.log(err));
 
-app.post("/pins");
+app.use("/api/pins", pinRoute);
 
 app.listen(8800, () => {
   console.log("Backend server is running!");
