@@ -4,6 +4,7 @@ const app = express();
 const { MongoClient, ServerApiVersion } = require("mongodb");
 require("dotenv").config();
 const pinRoute = require("../backend/routes/pins");
+const userRoute = require("../backend/routes/users");
 app.use(express.json());
 // console.log(process.env.REACT_APP_MONGO_URL);
 
@@ -14,6 +15,7 @@ mongoose
   .then(() => console.log("Mongo connected"))
   .catch((err) => console.log(err));
 
+app.use("/api/users", userRoute);
 app.use("/api/pins", pinRoute);
 
 app.listen(8800, () => {
