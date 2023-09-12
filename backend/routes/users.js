@@ -25,12 +25,22 @@ router.post("/register", async (req, res) => {
 
 // to login
 
-router.post("/login", async (req,res)=>{
-    try {
-        
-    } catch (error) {
-        res.status(500).json(error);
-    }
-})
+router.post("/login", async (req, res) => {
+  try {
+    // find user
+    const user = await User.findOne({ username: req.body.username });
+    !user && res.status(400).json("Wrong username or password!");
+    //validate user
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    !validPassword && res.status(400).json("Wrong username or password!");
+    //send res
+    res.status(200).json({ _id: user._id, usename: user.username });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 module.exports = router;
