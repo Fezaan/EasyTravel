@@ -1,18 +1,28 @@
-import * as React from "react";
-import Map from "react-map-gl";
+import { useState, useEffect, useRef } from "react";
+import mapboxGl from "mapbox-gl";
+
+mapboxGl.accessToken = process.env.REACT_APP_MAPBOX;
+console.log(mapboxGl.accessToken);
 
 function App() {
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [lng, setLng] = useState(-70.9);
+  const [lat, setLat] = useState(42.35);
+  const [zoom, setZoom] = useState(9);
+  useEffect(() => {
+    if (map.current) return; // initialize map only once
+    map.current = new mapboxGl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v12",
+      center: [lng, lat],
+      zoom: zoom,
+    });
+  });
   return (
-    <Map
-      mapboxAccessToken="<Mapbox access token>"
-      initialViewState={{
-        longitude: -122.4,
-        latitude: 37.8,
-        zoom: 14,
-      }}
-      style={{ width: 600, height: 400 }}
-      mapStyle="mapbox://styles/mapbox/streets-v9"
-    />
+    <div className="App">
+      <div ref={mapContainer} className="map-container"></div>
+    </div>
   );
 }
 
