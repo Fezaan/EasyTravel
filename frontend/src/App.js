@@ -1,28 +1,23 @@
-import { useState, useEffect, useRef } from "react";
-import mapboxGl from "mapbox-gl";
-
-mapboxGl.accessToken = process.env.REACT_APP_MAPBOX;
-console.log(mapboxGl.accessToken);
+import * as React from "react";
+import Map, { Marker } from "react-map-gl";
+import RoomIcon from '@mui/icons-material/Room';
 
 function App() {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(9);
-  useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxGl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v12",
-      center: [lng, lat],
-      zoom: zoom,
-    });
-  });
   return (
-    <div className="App">
-      <div ref={mapContainer} className="map-container"></div>
-    </div>
+    <Map
+      mapboxAccessToken={process.env.REACT_APP_MAPBOX}
+      initialViewState={{
+        longitude: 46,
+        latitude: 17,
+        zoom: 8,
+      }}
+      style={{ width: "100vw", height: "100vh" }}
+      mapStyle="mapbox://styles/mapbox/light-v10"
+    >
+      <Marker longitude={75.58} latitude={24.92} anchor="bottom">
+        <RoomIcon className="icon" />
+      </Marker>
+    </Map>
   );
 }
 
