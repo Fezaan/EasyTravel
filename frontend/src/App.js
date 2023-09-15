@@ -1,23 +1,37 @@
-import * as React from "react";
+import { useState } from "react";
 import Map, { Marker } from "react-map-gl";
-import RoomIcon from '@mui/icons-material/Room';
+import RoomIcon from "@mui/icons-material/Room";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 function App() {
+  const [viewport, setViewport] = useState({
+    width: "100vw",
+    height: "100vh",
+    latitude: 17,
+    longitude: 46,
+    zoom: 8,
+  });
   return (
-    <Map
-      mapboxAccessToken={process.env.REACT_APP_MAPBOX}
-      initialViewState={{
-        longitude: 46,
-        latitude: 17,
-        zoom: 8,
-      }}
-      style={{ width: "100vw", height: "100vh" }}
-      mapStyle="mapbox://styles/mapbox/light-v10"
-    >
-      <Marker longitude={75.58} latitude={24.92} anchor="bottom">
-        <RoomIcon className="icon" />
-      </Marker>
-    </Map>
+    <>
+      <Map
+        {...viewport}
+        // initialViewState={{
+        //   latitude: 46,
+        //   longitude: 17,
+        //   zoom: 8,
+        // }}
+        onMove={(evt) => {
+          setViewport((prevViewport) => evt.viewState);
+        }}
+        mapboxAccessToken={process.env.REACT_APP_MAPBOX}
+        mapStyle="mapbox://styles/mapbox/light-v10"
+        style={{ width: "100vw", height: "100vh" }}
+      >
+        <Marker latitude={25.17} longitude={75.58}>
+          <RoomIcon style={{ fontSize: viewport.zoom * 10 }} />
+        </Marker>
+      </Map>
+    </>
   );
 }
 
