@@ -8,9 +8,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "./app.css";
 import axios from "axios";
 import { format } from "timeago.js";
+import Register from "./components/register";
 
 function App() {
-  const currentUser = "fezaan";
+  const [currentUser, setcurrentUser] = useState(null);
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
@@ -174,6 +175,7 @@ function App() {
             <button className="button register">Register</button>
           </div>
         )}
+        <Register />
       </Map>
     </>
   );
