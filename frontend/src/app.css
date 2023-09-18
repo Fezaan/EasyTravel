@@ -29,6 +29,7 @@ label{
 }
 .desc{
     font-size: 14px;
+    max-width: 215px;
 }
 .stars .star{
     color: gold;
@@ -74,4 +75,33 @@ textarea, select{
     color: white;
     background-color: tomato;
     cursor: pointer;
+}
+
+.button{
+    position: relative;
+    overflow: hidden;
+    display: inline;
+    z-index: 1;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.logout{
+    background-color: tomato;
+    top: 15px;
+    left: 96%;
+}
+.login{
+    background-color: teal;
+}
+.register{
+    background-color: slategray;
+}
+.buttons{
+    position: absolute;
+    top: 60px;
+    right: 10px;
 }

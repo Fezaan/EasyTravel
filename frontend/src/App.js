@@ -10,13 +10,13 @@ import axios from "axios";
 import { format } from "timeago.js";
 
 function App() {
-  const currentUser = "sania";
+  const currentUser = "fezaan";
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(1);
   const [viewport, setViewport] = useState({
     width: "100vw",
     height: "100vh",
@@ -55,6 +55,7 @@ function App() {
   };
 
   const handleSubmit = async (e) => {
+    console.log("Submitted");
     e.preventDefault();
     const newPin = {
       username: currentUser,
@@ -65,11 +66,11 @@ function App() {
       long: newPlace.long,
     };
     try {
-      const res = await axios.post("/pins", newPin);
+      const res = await axios.post("http://localhost:8800/api/pins", newPin);
       setPins([...pins, res.data]);
       setNewPlace(null);
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
     }
   };
 
@@ -116,11 +117,7 @@ function App() {
                   <p className="desc">{p.desc}</p>
                   <label>Rating</label>
                   <div className="stars">
-                    <StarIcon className="star" />
-                    <StarIcon className="star" />
-                    <StarIcon className="star" />
-                    <StarIcon className="star" />
-                    <StarIcon className="star" />
+                    {Array(p.rating).fill(<StarIcon className="star" />)}
                   </div>
                   <label>Information</label>
                   <span className="username">
@@ -142,9 +139,7 @@ function App() {
             onClose={() => setNewPlace((prev) => null)}
           >
             <div>
-              <form 
-              // onSubmit={handleSubmit}
-              >
+              <form onSubmit={handleSubmit}>
                 <label>Title</label>
                 <input
                   type="text"
@@ -170,6 +165,14 @@ function App() {
               </form>
             </div>
           </Popup>
+        )}
+        {currentUser ? (
+          <button className="button logout">Log out</button>
+        ) : (
+          <div className="buttons">
+            <button className="button login">Login</button>
+            <button className="button register">Register</button>
+          </div>
         )}
       </Map>
     </>
