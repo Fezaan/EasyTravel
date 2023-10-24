@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "./register.css";
 import RoomIcon from "@mui/icons-material/Room";
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useRef } from "react";
 import axios from "axios";
 
-export default function Register(){
+export default function Register({setshowRegister}){
     const [success, setSuccess]= useState(false);
     const [error, setError]= useState(false);
     const nameRef= useRef();
@@ -18,7 +19,7 @@ export default function Register(){
             password: passwordRef.current.value,
         }
         try {
-            const res= await axios.post("/users/register", newUser);
+            const res= await axios.post("http://localhost:8800/users/register", newUser);
             setError(false);
             setSuccess(true);
         } catch (error) {
@@ -41,6 +42,7 @@ export default function Register(){
                 {error && (
                 <span className="failure">OOPS! Something went wrong.</span>)}
             </form>
+            <CancelIcon className="registerCancel" onClick={()=>setshowRegister(false)} />
         </div>
     )
 }

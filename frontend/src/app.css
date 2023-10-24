@@ -97,6 +97,7 @@ textarea, select{
 }
 .login{
     background-color: teal;
+    margin-right: 20px;
 }
 .register{
     background-color: slategray;

@@ -35,6 +35,7 @@ form{
     border-radius: 5px;
     background-color: slateblue;
     color: white;
+    cursor: pointer;
 }
 .success{
     color: green;
@@ -45,4 +46,10 @@ form{
     color: red;
     font-size: 12px;
     text-align: center;
+}
+.registerCancel{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
 }
